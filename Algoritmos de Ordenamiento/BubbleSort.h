@@ -7,7 +7,9 @@
 
 
 class BubbleSort {
-
+public:
+    void swapping(int* x, int* y);
+    void bubbleSort(int arr[], int n);
 };
 
 
