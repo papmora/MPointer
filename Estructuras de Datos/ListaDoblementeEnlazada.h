@@ -9,15 +9,25 @@
 
 class ListaDoblementeEnlazada {
 public:
-    typedef struct Nodo tipoNodo;
+    typedef struct Nodo{
+        int dato;
+        struct Nodo* anterior;
+        struct Nodo* siguiente;
+    }nodoDoble;
 
-    tipoNodo* cabeza = NULL;
+    static nodoDoble *lastNode(nodoDoble *temp){
+        while (temp && temp->siguiente)
+            temp = temp->siguiente;
+        return temp;
+    }
+
+    nodoDoble* cabeza = NULL;
 
     void agregarInicio(int dato);
     void agregarFinal(int dato);
     void agregarEspec(int index, int dato);
-    void eliminar(tipoNodo* aBorrar);
-    tipoNodo* buscar(int dato);
+    void eliminar(nodoDoble* aBorrar);
+    nodoDoble* buscar(int dato);
     void mostrar();
 };
 

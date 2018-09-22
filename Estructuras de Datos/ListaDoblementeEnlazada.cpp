@@ -6,11 +6,11 @@
 #include <iostream>
 #include <stdlib.h>
 
-typedef struct Nodo{
+/*typedef struct Nodo{
     int dato;
     struct Nodo* anterior;
     struct Nodo* siguiente;
-}nodoDoble;
+}nodoDoble;*/
 
 typedef ListaDoblementeEnlazada LDE;
 
@@ -85,7 +85,7 @@ void LDE::eliminar(nodoDoble* aBorrar) {
     return;
 }
 
-nodoDoble* LDE::buscar(int dato) {
+LDE::nodoDoble* LDE::buscar(int dato) {
     nodoDoble* temp = cabeza;
     while(temp != NULL){
         if(temp->dato == dato){

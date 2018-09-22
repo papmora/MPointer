@@ -4,6 +4,9 @@
 
 #include "Estructuras de Datos/ListaEnlazada.h"
 #include "Estructuras de Datos/ListaDoblementeEnlazada.h"
+#include "Algoritmos de Ordenamiento/BubbleSort.h"
+#include "Algoritmos de Ordenamiento/InsertionSort.h"
+#include "Algoritmos de Ordenamiento/QuickSort.h"
 
 int main() {
 
@@ -30,12 +33,12 @@ int main() {
     std::cout << "Tercera iteracion: " << std::endl;
     LE.mostrar(cabeza);
 
-    std::cout << "LISTA DOBLEMENTE ENLAZADA: " << std::endl;
+    std::cout << "\nLISTA DOBLEMENTE ENLAZADA: " << std::endl;
     ListaDoblementeEnlazada LDE = ListaDoblementeEnlazada();
-    LDE.agregarInicio(12);
     LDE.agregarInicio(7);
-    LDE.agregarInicio(9);
+    LDE.agregarFinal(9);
     LDE.agregarInicio(24);
+    LDE.agregarFinal(12);
 
     std::cout << "Primer iteracion: " << std::endl;
     LDE.mostrar();
@@ -45,10 +48,25 @@ int main() {
     std::cout << "Segunda iteracion: " << std::endl;
     LDE.mostrar();
 
-    ListaDoblementeEnlazada::tipoNodo* aBorrar = LDE.buscar(15);
+    ListaDoblementeEnlazada::nodoDoble* aBorrar = LDE.buscar(15);
     LDE.eliminar(aBorrar);
 
     std::cout << "Tercera iteracion: " << std::endl;
+    LDE.mostrar();
+
+    /*BubbleSort BS = BubbleSort();
+    BS.bubbleSort(LDE);
+    std::cout << "Ordenamiento Burbuja: " << std::endl;
+    LDE.mostrar();*/
+
+    /*InsertionSort IS = InsertionSort();
+    IS.insertionSort(LDE);
+    std::cout << "Ordenamiento por Inserción: " << std::endl;
+    LDE.mostrar();*/
+
+    QuickSort QS = QuickSort();
+    QS.quickSort(LDE);
+    std::cout << "Ordenamiento QuickSort: " << std::endl;
     LDE.mostrar();
 
     return 0;

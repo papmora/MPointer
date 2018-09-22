@@ -3,6 +3,11 @@
 //
 
 #include "BubbleSort.h"
+#include "../Estructuras de Datos/ListaDoblementeEnlazada.h"
+#include <iostream>
+#include <stdlib.h>
+
+typedef ListaDoblementeEnlazada LDE;
 
 void BubbleSort::swapping(int *x, int *y) {
     int temp = *x;
@@ -10,11 +15,23 @@ void BubbleSort::swapping(int *x, int *y) {
     *y = temp;
 }
 
-void BubbleSort::bubbleSort(int *arr, int size) {
-    int i, j;
-    for (i = 0; i < size-1; i++)
-        // Last i elements are already in place
-        for (j = 0; j < (size-i)-1; j++)
-            if (arr[j] > arr[j+1])
-                swapping(&arr[j], &arr[j+1]);
+void BubbleSort::bubbleSort(LDE lde) {
+    LDE::nodoDoble *ptr, *temp;
+
+    if(lde.cabeza == NULL || lde.cabeza->siguiente == NULL) {
+        return;
+    }
+    int swapped = 1;
+
+    while(swapped){
+        swapped = 0;
+        ptr = lde.cabeza;
+        while(ptr->siguiente != NULL){
+            if(ptr->dato > ptr->siguiente->dato){
+                swapped = 1;
+                swapping(&ptr->dato, &ptr->siguiente->dato);
+            }
+            ptr = ptr->siguiente;
+        }
+    }
 }

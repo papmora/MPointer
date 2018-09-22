@@ -5,11 +5,15 @@
 #ifndef MPOINTER_BUBBLESORT_H
 #define MPOINTER_BUBBLESORT_H
 
+#include "../Estructuras de Datos/ListaDoblementeEnlazada.h"
+
+typedef ListaDoblementeEnlazada LDE;
 
 class BubbleSort {
 public:
+    void bubbleSort(LDE lde);
+private:
     void swapping(int* x, int* y);
-    void bubbleSort(int arr[], int n);
 };
 
 
