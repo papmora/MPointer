@@ -7,6 +7,8 @@
 #include "Algoritmos de Ordenamiento/BubbleSort.h"
 #include "Algoritmos de Ordenamiento/InsertionSort.h"
 #include "Algoritmos de Ordenamiento/QuickSort.h"
+#include "MPointer.h"
+#include "MPointerGC.h"
 
 int main() {
 
@@ -68,6 +70,34 @@ int main() {
     QS.quickSort(LDE);
     std::cout << "Ordenamiento QuickSort: " << std::endl;
     LDE.mostrar();
+
+// pruebas Mpointer
+
+   MPointer<int> myPtr=MPointer<int>(new int);
+    MPointer<int> myPtr2=MPointer<int>(new int);
+
+    cout << &myPtr<< endl;
+    cout << &myPtr2 <<"\n"<< endl;
+
+
+    *myPtr=5;
+    cout<< &myPtr<<"\n"<<endl;
+
+    myPtr2=11;
+    int y= &myPtr2;
+    cout<<y<<endl;
+    cout<<&myPtr2<<"\n"<<endl;
+
+    myPtr=myPtr2;
+    cout << &myPtr<< endl;
+    cout << &myPtr2 <<"\n"<< endl;
+
+
+
+
+
+
+    cout<< MPointerGC::getInstance().getBoss()<<endl;
 
     return 0;
 }
