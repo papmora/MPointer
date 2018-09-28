@@ -6,15 +6,9 @@
 #include <iostream>
 #include <stdlib.h>
 
-/*typedef struct Nodo{
-    int dato;
-    struct Nodo* anterior;
-    struct Nodo* siguiente;
-}nodoDoble;*/
-
 typedef ListaDoblementeEnlazada LDE;
 
-void LDE::agregarInicio(int dato) {
+void LDE::agregarInicio(int* dato) {
     nodoDoble* nuevoNodo = (nodoDoble*)malloc(sizeof(nodoDoble));
     nuevoNodo->dato = dato;
 
@@ -30,7 +24,7 @@ void LDE::agregarInicio(int dato) {
     }
 }
 
-void LDE::agregarFinal(int dato) {
+void LDE::agregarFinal(int* dato) {
     nodoDoble* nuevoNodo = (nodoDoble*)malloc(sizeof(nodoDoble));
     nuevoNodo->dato = dato;
 
@@ -48,7 +42,7 @@ void LDE::agregarFinal(int dato) {
     }
 }
 
-void LDE::agregarEspec(int index, int dato) {
+void LDE::agregarEspec(int index, int* dato) {
     nodoDoble* nuevoNodo = (nodoDoble*)malloc(sizeof(nodoDoble));
     nuevoNodo->dato = dato;
 
@@ -85,7 +79,7 @@ void LDE::eliminar(nodoDoble* aBorrar) {
     return;
 }
 
-LDE::nodoDoble* LDE::buscar(int dato) {
+LDE::nodoDoble* LDE::buscar(int* dato) {
     nodoDoble* temp = cabeza;
     while(temp != NULL){
         if(temp->dato == dato){
@@ -102,8 +96,8 @@ void LDE::mostrar() {
     nodoDoble* temp = cabeza;
     std::cout << "[";
     while(temp->siguiente != NULL){
-        std::cout << temp->dato << ",";
+        std::cout << *temp->dato << ",";
         temp = temp->siguiente;
     }
-    std::cout << temp->dato << "]" << std::endl;
+    std::cout << *temp->dato << "]" << std::endl;
 }

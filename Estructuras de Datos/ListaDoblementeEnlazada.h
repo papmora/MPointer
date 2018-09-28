@@ -10,7 +10,7 @@
 class ListaDoblementeEnlazada {
 public:
     typedef struct Nodo{
-        int dato;
+        int* dato;
         struct Nodo* anterior;
         struct Nodo* siguiente;
     }nodoDoble;
@@ -23,11 +23,11 @@ public:
 
     nodoDoble* cabeza = NULL;
 
-    void agregarInicio(int dato);
-    void agregarFinal(int dato);
-    void agregarEspec(int index, int dato);
+    void agregarInicio(int* dato);
+    void agregarFinal(int* dato);
+    void agregarEspec(int index, int* dato);
     void eliminar(nodoDoble* aBorrar);
-    nodoDoble* buscar(int dato);
+    nodoDoble* buscar(int* dato);
     void mostrar();
 };
 

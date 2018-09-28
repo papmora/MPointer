@@ -9,16 +9,21 @@
 
 class ListaEnlazada {
 public:
-    typedef struct Nodo tipoNodo;
+    typedef struct Nodo {
+        int* dato;
+        struct Nodo *siguiente;
+    } nodoSimple;
+
+    nodoSimple* cabeza = NULL;
 
     //Agregar al final
-    void agregar(tipoNodo *&cabeza, int n);
+    void agregar(int* n);
     //Imprimir Lista
-    void mostrar(tipoNodo *cabeza);
+    void mostrar();
     //Buscar en la lista
-    void buscar(tipoNodo *cabeza, int n);
+    void buscar(int* n);
     //Eliminar elemento de la lista
-    void eliminar(tipoNodo *&cabeza, int dato);
+    void eliminar(int* dato);
 };
 
 

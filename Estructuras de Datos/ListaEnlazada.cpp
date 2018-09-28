@@ -6,12 +6,7 @@
 #include <iostream>
 #include <stdlib.h>
 
-typedef struct Nodo {
-    int dato;
-    struct Nodo *siguiente;
-} nodoSimple;
-
-void ListaEnlazada::agregar(nodoSimple *&cabeza, int n) {
+void ListaEnlazada::agregar(int* n) {
     nodoSimple *nuevo_nodo = new nodoSimple();
     nuevo_nodo->dato = n;
 
@@ -24,13 +19,12 @@ void ListaEnlazada::agregar(nodoSimple *&cabeza, int n) {
         cola = cabeza;
         while (cola->siguiente != NULL){
             cola = cola->siguiente;
-
         }
         cola->siguiente = nuevo_nodo;
     }
 }
 
-void ListaEnlazada::mostrar(nodoSimple *cabeza) {
+void ListaEnlazada::mostrar() {
     nodoSimple *temp = cabeza;
     std::cout << "[";
     while(temp->siguiente != NULL) {
@@ -40,7 +34,7 @@ void ListaEnlazada::mostrar(nodoSimple *cabeza) {
     std::cout << temp->dato << "]" << std::endl;
 }
 
-void ListaEnlazada::buscar(nodoSimple *cabeza, int n) {
+void ListaEnlazada::buscar(int* n) {
     bool band = false;
     nodoSimple *temp = new nodoSimple();
     temp = cabeza;
@@ -58,7 +52,7 @@ void ListaEnlazada::buscar(nodoSimple *cabeza, int n) {
     }
 }
 
-void ListaEnlazada::eliminar(nodoSimple *&cabeza, int dato) {
+void ListaEnlazada::eliminar(int* dato) {
     if (cabeza != NULL){
         nodoSimple *temp_borrar;
         nodoSimple *temp_anterior=NULL;

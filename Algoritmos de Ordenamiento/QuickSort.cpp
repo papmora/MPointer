@@ -12,17 +12,17 @@ void QuickSort::swapping(int *x, int *y) {
 }
 
 nodoD* QuickSort::partition(nodoD* bajo, nodoD* alto) {
-    int pivot = alto->dato;
+    int pivot = *alto->dato;
     nodoD* i = bajo->anterior;
 
     for (nodoD* j = bajo; j != alto ; j = j->siguiente) {
-        if(j->dato <= pivot){
+        if(*j->dato <= pivot){
             i = (i == NULL)? bajo : i->siguiente;
-            swapping(&i->dato, &j->dato);
+            swapping(i->dato, j->dato);
         }
     }
     i = (i == NULL)? bajo : i->siguiente; // Similar to i++
-    swapping(&(i->dato), &(alto->dato));
+    swapping((i->dato), (alto->dato));
     return i;
 }
 

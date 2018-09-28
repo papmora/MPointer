@@ -27,9 +27,9 @@ void BubbleSort::bubbleSort(LDE lde) {
         swapped = 0;
         ptr = lde.cabeza;
         while(ptr->siguiente != NULL){
-            if(ptr->dato > ptr->siguiente->dato){
+            if(*ptr->dato > *ptr->siguiente->dato){
                 swapped = 1;
-                swapping(&ptr->dato, &ptr->siguiente->dato);
+                swapping(ptr->dato, ptr->siguiente->dato);
             }
             ptr = ptr->siguiente;
         }

@@ -7,27 +7,28 @@
 
 #include <iostream>
 #include <string>
-#include "ListaEnlazada.h"
+#include "Estructuras de Datos/ListaEnlazada.h"
+
+typedef ListaEnlazada LE;
 
 class MPointerGC {
+private:
     static MPointerGC MP;
-    std::string boss;
-    bool existe=true;
+    static LE lista;
+    static int id;
 
     MPointerGC();
 
 public:
-    MPointerGC(const MPointerGC&)= delete;
-    MPointerGC& operator =(const MPointerGC&)= delete;
+    MPointerGC(const MPointerGC&) = delete;
+    MPointerGC& operator = (const MPointerGC&) = delete;
 
     ~MPointerGC();
 
+    static void agregarDirecciones(int* dir);
     static MPointerGC& getInstance();
-    std::string getBoss();
-
-
-
-
+    static LE getLista();
+    static int getId();
 };
 
 

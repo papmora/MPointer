@@ -8,17 +8,13 @@
 #include <iostream>
 #include <typeinfo>
 #include "MPointerGC.h"
-
 #include "RC.h"
-
-using namespace std;
 
 template <class T>
 class MPointer {
 private:
-    T* PDato= new T; ///puntero del dato que se va a usar
     int ID;
-
+    T* PDato= new T; ///puntero del dato que se va a usar
     RC* reference; /// puntero de contador de referencias
 
 public:
@@ -26,8 +22,7 @@ public:
 public:
 
     ///Constructor por defecto
-    MPointer() : PDato(NULL), reference(NULL)
-    {
+    MPointer() : PDato(new T), reference(NULL) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -35,8 +30,7 @@ public:
     }
 
     ///Constructor con datos
-    MPointer(T* pValue) : PDato(pValue), reference(0)
-    {
+    MPointer(T* pValue) : PDato(pValue), reference(0) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -63,48 +57,36 @@ public:
             delete reference;
         }
     }
-
-///sobre carga del operador &
+    ///sobre carga del operador &
     T operator & (){
         return *getPDato();
-
     }
-
-///sobre carga del operador *
-    T& operator* (){
+    ///sobre carga del operador *
+    T& operator * (){
         return *PDato ;
-
     }
-
-///sobre carga del operador = (igualdad de MPointer)
+    ///sobre carga del operador = (igualdad de MPointer)
     MPointer<T>& operator = ( MPointer<T> &MP){
-        // Assignment operator
-       if (*this->PDato != &MP) { // Avoid self assignment
-
-           // Decrement the old reference count
-           // if reference become zero delete the old data
+        // Operador de asignacion
+       if (*this->PDato != &MP) { // Evita que se asigne el mismo dato
+           // Decrementa el contador de referencias
+           // si la referencia se vuelve cero borra el dato
            if (reference->Release() == 0) {
                delete PDato;
                delete reference;
            }
-           // Copy the data and reference pointer
-           // and increment the reference count
+           // copia el dato y la referencia al puntero
+           // e incrementa el contador de referencias
            this->ID=MP.ID ;
            this->PDato=MP.PDato;
            reference->AddRef();
-
        }
        return *this;
-
-
     }
 
-///sobre carga del operador = (igualdad entre Mpointer y tipo T) guarda dato en espacio
-    void operator = (T t){
-
+    ///sobre carga del operador = (igualdad entre Mpointer y tipo T) guarda dato en espacio
+    void operator =(T t){
         *PDato=t;
-
-
     }
 
     ///sobre carga del operador = (igualdad entre *Mpointer y tipo T) guarda dato en espacio
@@ -112,16 +94,13 @@ public:
         this->setPDato(t);
     }
 
+    ///Metodo New para crear MPointer
+    static MPointer<T> New(){
+        MPointer<T>* ptr = new MPointer<T>();
 
-
-
-///Metodo New para crear MPointer
-    void New(){
-        //agregar direccion de memoria (int) a la lista de MPointerGC
-        //malloc para MPointer size of T
-
-
-
+        ptr->setID(MPointerGC::getId());
+        MPointerGC::agregarDirecciones((int*) ptr);
+        return *ptr;
     }
 
     ///Metodo get de PDato
@@ -153,8 +132,6 @@ public:
     void setReference(RC *reference) {
         MPointer::reference = reference;
     }
-
-
 };
 
 

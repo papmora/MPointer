@@ -14,43 +14,54 @@ int main() {
 
     std::cout << "LISTA ENLAZADA SIMPLE: " << std::endl;
     ListaEnlazada LE = ListaEnlazada();
-    ListaEnlazada::tipoNodo *cabeza = NULL;
-    LE.agregar(cabeza, 3);
-    LE.agregar(cabeza, 5);
-    LE.agregar(cabeza, 8);
-    LE.agregar(cabeza, 2);
-    LE.agregar(cabeza, 11);
+    ListaEnlazada::nodoSimple *cabeza = NULL;
+    int v1 = 3;
+    LE.agregar(&v1);
+    int v2 = 5;
+    LE.agregar(&v2);
+    int v3 = 8;
+    LE.agregar(&v3);
+    int v4 = 2;
+    LE.agregar(&v4);
+    int v5 = 11;
+    LE.agregar(&v5);
 
     std::cout << "Primer iteracion: " << std::endl;
-    LE.mostrar(cabeza);
+    LE.mostrar();
 
-    LE.buscar(cabeza, 2);
-    LE.buscar(cabeza, 20);
+    LE.buscar((int*) 2);
+    LE.buscar((int*) 20);
 
-    LE.eliminar(cabeza, 8);
+    LE.eliminar((int*) 8);
     std::cout << "Segunda iteracion: " << std::endl;
-    LE.mostrar(cabeza);
+    LE.mostrar();
 
-    LE.eliminar(cabeza,30);
+    LE.eliminar((int*) 30);
     std::cout << "Tercera iteracion: " << std::endl;
-    LE.mostrar(cabeza);
+    LE.mostrar();
 
     std::cout << "\nLISTA DOBLEMENTE ENLAZADA: " << std::endl;
     ListaDoblementeEnlazada LDE = ListaDoblementeEnlazada();
-    LDE.agregarInicio(7);
-    LDE.agregarFinal(9);
-    LDE.agregarInicio(24);
-    LDE.agregarFinal(12);
+    int v6 = 7;
+    LDE.agregarInicio(&v6);
+    int v7 = 9;
+    LDE.agregarFinal(&v7);
+    int v8 = 24;
+    LDE.agregarInicio(&v8);
+    int v9 = 12;
+    LDE.agregarFinal(&v9);
 
     std::cout << "Primer iteracion: " << std::endl;
     LDE.mostrar();
 
-    LDE.agregarEspec(3, 15);
-    LDE.agregarEspec(2, 22);
+    int v10 = 15;
+    LDE.agregarEspec(3,&v10);
+    int v11 = 22;
+    LDE.agregarEspec(2, &v11);
     std::cout << "Segunda iteracion: " << std::endl;
     LDE.mostrar();
 
-    ListaDoblementeEnlazada::nodoDoble* aBorrar = LDE.buscar(15);
+    ListaDoblementeEnlazada::nodoDoble* aBorrar = LDE.buscar(&v10);
     LDE.eliminar(aBorrar);
 
     std::cout << "Tercera iteracion: " << std::endl;
@@ -71,33 +82,30 @@ int main() {
     std::cout << "Ordenamiento QuickSort: " << std::endl;
     LDE.mostrar();
 
-// pruebas Mpointer
+// pruebas MPointer
+    MPointerGC& mPointerGC = MPointerGC::getInstance();
 
-   MPointer<int> myPtr=MPointer<int>(new int);
-    MPointer<int> myPtr2=MPointer<int>(new int);
+    MPointer<int> myPtr = MPointer<int>::New();
+    MPointer<int> myPtr2 = MPointer<int>::New();
 
-    cout << &myPtr<< endl;
-    cout << &myPtr2 <<"\n"<< endl;
+    std::cout<< "" << std::endl;
+    std::cout << "Ptr 1: " << &myPtr << std::endl;
+    std::cout << "Ptr 2: " << &myPtr2 <<"\n"<< std::endl;
 
+    *myPtr = 5;
+    std::cout<< "Nuevo ptr 1: " << &myPtr <<"\n"<< std::endl;
 
-    *myPtr=5;
-    cout<< &myPtr<<"\n"<<endl;
-
-    myPtr2=11;
+    myPtr2 = 11;
     int y= &myPtr2;
-    cout<<y<<endl;
-    cout<<&myPtr2<<"\n"<<endl;
+    std::cout << "Y: " << y << std::endl;
+    std::cout<< "Nuevo ptr 2: " << &myPtr2<<"\n"<< std::endl;
 
     myPtr=myPtr2;
-    cout << &myPtr<< endl;
-    cout << &myPtr2 <<"\n"<< endl;
+    std::cout << "Si se iguala ptr1 = ptr2: " << std::endl;
+    std::cout << "Ptr1: " << &myPtr<< std::endl;
+    std::cout << "Ptr2: " << &myPtr2 << std::endl;
 
-
-
-
-
-
-    cout<< MPointerGC::getInstance().getBoss()<<endl;
-
+    std::cout << "\nLista de Direcciones: " << std::endl;
+    mPointerGC.getLista().mostrar();
     return 0;
 }

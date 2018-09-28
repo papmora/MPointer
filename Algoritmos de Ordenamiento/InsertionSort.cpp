@@ -12,15 +12,15 @@ void InsertionSort::insertionSort(ListaDoblementeEnlazada LDE) {
     nodoD *i, *j;
     int dato;
     for (i = LDE.cabeza->siguiente; i != NULL ; i = i->siguiente) {
-        dato = i->dato;
+        dato = *i->dato;
         j = i->anterior;
 
-        while(j != NULL && j->dato > dato){
-            j->siguiente->dato = j->dato;
+        while(j != NULL && *j->dato > dato){
+            *j->siguiente->dato = *j->dato;
             j = j->anterior;
         }
 
-        if(j != NULL)j->siguiente->dato = dato;
-        else LDE.cabeza->dato = dato;
+        if(j != NULL) *j->siguiente->dato = dato;
+        else *LDE.cabeza->dato = dato;
     }
 }
