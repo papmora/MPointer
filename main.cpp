@@ -86,7 +86,12 @@ int main() {
     MPointerGC& mPointerGC = MPointerGC::getInstance();
 
     MPointer<int> myPtr = MPointer<int>::New();
+    cliente c1;
+    myPtr.setID(c1.getToken());
+    cout<<myPtr.getID()<<endl;
     MPointer<int> myPtr2 = MPointer<int>::New();
+    myPtr2.setID(c1.getToken());
+    cout<<myPtr2.getID()<<endl;
 
     std::cout<< "" << std::endl;
     std::cout << "Ptr 1: " << &myPtr << std::endl;

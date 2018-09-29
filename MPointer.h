@@ -10,12 +10,25 @@
 #include "MPointerGC.h"
 #include "RC.h"
 
+#include "nlohmann/json.hpp"
+#include "cliente.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+#define FILE_TO_SEND    "/home/samuel/CLionProjects/c2/data.json"
+
+using namespace std;
+using json = nlohmann::json;
+
+
 template <class T>
 class MPointer {
 private:
     int ID;
     T* PDato= new T; ///puntero del dato que se va a usar
     RC* reference; /// puntero de contador de referencias
+
 
 public:
     typedef T element_type;
@@ -30,7 +43,7 @@ public:
     }
 
     ///Constructor con datos
-    MPointer(T* pValue) : PDato(pValue), reference(0) {
+    MPointer(T* pValue) : PDato(pValue), reference(NULL) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -77,6 +90,27 @@ public:
            }
            // copia el dato y la referencia al puntero
            // e incrementa el contador de referencias
+
+           cliente socket;
+           json j1 = {{"byte",  0},
+                      {"id",    0},
+                      {"value", 0}};
+
+           remove(FILE_TO_SEND);
+           ofstream o(FILE_TO_SEND);
+           o << setw(10) << j1 << std::endl;
+
+           int g = this->getID();
+           cout << g <<endl;
+           T h = *MP.PDato;
+           j1["byte"] = 0;
+           j1["value"] = h;
+           j1["id"] = g;
+           remove(FILE_TO_SEND);
+           ofstream z(FILE_TO_SEND);
+           z << setw(10) << j1 << std::endl;
+           socket.conectar();
+
            this->ID=MP.ID ;
            this->PDato=MP.PDato;
            reference->AddRef();
@@ -86,11 +120,31 @@ public:
 
     ///sobre carga del operador = (igualdad entre Mpointer y tipo T) guarda dato en espacio
     void operator =(T t){
+
+        cliente socket;
+        json j1 = {{"byte",  0},
+                   {"id",    0},
+                   {"value", 0}};
+
+        remove(FILE_TO_SEND);
+        ofstream o(FILE_TO_SEND);
+        o << setw(10) << j1 << std::endl;
+
+        int g = this->getID();
+        j1["byte"] = 0;
+        j1["value"] = t;
+        j1["id"] = g;
+        remove(FILE_TO_SEND);
+        ofstream z(FILE_TO_SEND);
+        z << setw(10) << j1 << std::endl;
+        socket.conectar();
+
         *PDato=t;
     }
 
     ///sobre carga del operador = (igualdad entre *Mpointer y tipo T) guarda dato en espacio
     void operator =(const T* t){
+        cout << "hola" << endl;
         this->setPDato(t);
     }
 
@@ -98,7 +152,25 @@ public:
     static MPointer<T> New(){
         MPointer<T>* ptr = new MPointer<T>();
 
-        ptr->setID(MPointerGC::getId());
+        cliente socket;
+        json j1 = {{"byte",  0},
+                   {"id",    0},
+                   {"value", 0}};
+
+        remove(FILE_TO_SEND);
+        ofstream o(FILE_TO_SEND);
+        o << setw(10) << j1 << std::endl;
+
+        j1["byte"] = sizeof(T);
+        j1["value"] = 0;
+        j1["id"] = 0;
+        remove(FILE_TO_SEND);
+        ofstream x(FILE_TO_SEND);
+        x << setw(10) << j1 << std::endl;
+        int id = socket.conectar();
+
+        ptr->setID(id);
+        cout<<id<<endl;
         MPointerGC::agregarDirecciones((int*) ptr);
         return *ptr;
     }
