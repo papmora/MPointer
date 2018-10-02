@@ -5,7 +5,10 @@
 #ifndef MPOINTER_LISTADOBLEMENTEENLAZADA_H
 #define MPOINTER_LISTADOBLEMENTEENLAZADA_H
 
+#include <iostream>
 #include <stdlib.h>
+
+template <class T> class MPointer;
 
 class ListaDoblementeEnlazada {
 public:
@@ -28,7 +31,16 @@ public:
     void agregarEspec(int index, int* dato);
     void eliminar(nodoDoble* aBorrar);
     nodoDoble* buscar(int* dato);
-    void mostrar();
+
+    template <class T> void mostrar(){
+        nodoDoble* temp = cabeza;
+        std::cout << "[";
+        while(temp->siguiente != NULL){
+            std::cout << *((MPointer<T>*)temp->dato)->getPDato() << ",";
+            temp = temp->siguiente;
+        }
+        std::cout << *((MPointer<T>*)temp->dato)->getPDato() << "]" << std::endl;
+    }
 };
 
 

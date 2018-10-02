@@ -24,20 +24,9 @@ void ListaEnlazada::agregar(int* n) {
     }
 }
 
-void ListaEnlazada::mostrar() {
-    nodoSimple *temp = cabeza;
-    std::cout << "[";
-    while(temp->siguiente != NULL) {
-        std::cout << temp->dato << ",";
-        temp = temp->siguiente;
-    }
-    std::cout << temp->dato << "]" << std::endl;
-}
-
 void ListaEnlazada::buscar(int* n) {
     bool band = false;
-    nodoSimple *temp = new nodoSimple();
-    temp = cabeza;
+    nodoSimple *temp = cabeza;
     while (temp != NULL){
         if(temp->dato == n){
             band = true;

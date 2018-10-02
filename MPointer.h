@@ -2,11 +2,12 @@
 // Created by pablo on 21/09/18.
 //
 
-#ifndef PROYECTO1_MPOINTER_H
-#define PROYECTO1_MPOINTER_H
+#ifndef MPOINTER_MPOINTER_H
+#define MPOINTER_MPOINTER_H
 
 #include <iostream>
 #include <typeinfo>
+
 #include "MPointerGC.h"
 #include "RC.h"
 
@@ -18,9 +19,6 @@ private:
     RC* reference; /// puntero de contador de referencias
 
 public:
-    typedef T element_type;
-public:
-
     ///Constructor por defecto
     MPointer() : PDato(new T), reference(NULL) {
         /// Crea nueva referencia
@@ -85,12 +83,12 @@ public:
     }
 
     ///sobre carga del operador = (igualdad entre Mpointer y tipo T) guarda dato en espacio
-    void operator =(T t){
+    void operator =(const T t){
         *PDato=t;
     }
 
     ///sobre carga del operador = (igualdad entre *Mpointer y tipo T) guarda dato en espacio
-    void operator =(const T* t){
+    void operator =(T* t){
         this->setPDato(t);
     }
 
@@ -135,4 +133,4 @@ public:
 };
 
 
-#endif //PROYECTO1_MPOINTER_H
+#endif //MPOINTER_MPOINTER_H

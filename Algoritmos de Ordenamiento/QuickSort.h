@@ -12,11 +12,39 @@ typedef ListaDoblementeEnlazada::nodoDoble nodoD;
 
 class QuickSort {
 public:
-    void quickSort(LDE lde);
+    template <class T> static void quickSort(LDE lde){
+        nodoD* cbza = lde.cabeza;
+        nodoD* ultN = ListaDoblementeEnlazada::lastNode(cbza);
+        recQuickSort<T>(cbza, ultN);
+    }
 private:
-    void swapping(int* x, int* y);
-    nodoD* partition (nodoD* bajo, nodoD* alto);
-    void recQuickSort(nodoD* izq, nodoD* der);
+    static void swapping(int* x, int* y){
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+    }
+
+    template <class T> static nodoD* partition (nodoD* bajo, nodoD* alto){
+        int pivot = *((MPointer<T> *) alto->dato)->getPDato();
+        nodoD *i = bajo->anterior;
+        for (nodoD *j = bajo; j != alto && j->siguiente != NULL; j = j->siguiente) {
+            if (*((MPointer<T> *) j->dato)->getPDato() <= pivot) {
+                i = (i == NULL) ? bajo : i->siguiente;
+                swapping(((MPointer<T> *) i->dato)->getPDato(), ((MPointer<T> *) j->dato)->getPDato());
+            }
+        }
+        i = (i == NULL) ? bajo : i->siguiente; // Similar to i++
+        swapping(((MPointer<T> *) i->dato)->getPDato(), ((MPointer<T> *) alto->dato)->getPDato());
+        return i;
+    }
+
+    template <class T> static void recQuickSort(nodoD* alto, nodoD* bajo) {
+        if(alto != NULL && bajo != NULL && bajo != alto && bajo != alto->siguiente){
+            nodoD* p = partition<T>(bajo, alto);
+            recQuickSort<T>(bajo,p->anterior);
+            recQuickSort<T>(p->siguiente, alto);
+        }
+    }
 };
 
 

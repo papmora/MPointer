@@ -2,8 +2,8 @@
 // Created by pablo on 27/09/18.
 //
 
-#ifndef PROYECTO1_RC_H
-#define PROYECTO1_RC_H
+#ifndef MPOINTER_RC_H
+#define MPOINTER_RC_H
 
 
 class RC {
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //PROYECTO1_RC_H
+#endif //MPOINTER_RC_H

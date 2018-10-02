@@ -7,7 +7,11 @@
 #include <iostream>
 #include <stdlib.h>
 
+
+template <class T> class MPointer;
+
 class ListaEnlazada {
+
 public:
     typedef struct Nodo {
         int* dato;
@@ -18,8 +22,18 @@ public:
 
     //Agregar al final
     void agregar(int* n);
+
     //Imprimir Lista
-    void mostrar();
+    template <class T> void mostrar(){
+        nodoSimple *temp = cabeza;
+        std::cout << "[";
+        while(temp->siguiente != NULL) {
+            std::cout << *((MPointer<T>*)temp->dato)->getPDato() << ",";
+            temp = temp->siguiente;
+        }
+        std::cout << *((MPointer<T>*)temp->dato)->getPDato() << "]" << std::endl;
+    }
+
     //Buscar en la lista
     void buscar(int* n);
     //Eliminar elemento de la lista

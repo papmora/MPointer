@@ -10,9 +10,12 @@
 #include "MPointer.h"
 #include "MPointerGC.h"
 
+typedef ListaDoblementeEnlazada LDE;
+typedef ListaEnlazada LE;
+
 int main() {
 
-    std::cout << "LISTA ENLAZADA SIMPLE: " << std::endl;
+    /*std::cout << "LISTA ENLAZADA SIMPLE: " << std::endl;
     ListaEnlazada LE = ListaEnlazada();
     ListaEnlazada::nodoSimple *cabeza = NULL;
     int v1 = 3;
@@ -65,7 +68,7 @@ int main() {
     LDE.eliminar(aBorrar);
 
     std::cout << "Tercera iteracion: " << std::endl;
-    LDE.mostrar();
+    LDE.mostrar();*/
 
     /*BubbleSort BS = BubbleSort();
     BS.bubbleSort(LDE);
@@ -77,16 +80,17 @@ int main() {
     std::cout << "Ordenamiento por Inserción: " << std::endl;
     LDE.mostrar();*/
 
-    QuickSort QS = QuickSort();
+    /*QuickSort QS = QuickSort();
     QS.quickSort(LDE);
     std::cout << "Ordenamiento QuickSort: " << std::endl;
-    LDE.mostrar();
+    LDE.mostrar();*/
 
 // pruebas MPointer
     MPointerGC& mPointerGC = MPointerGC::getInstance();
 
     MPointer<int> myPtr = MPointer<int>::New();
     MPointer<int> myPtr2 = MPointer<int>::New();
+    MPointer<int> myPtr3 = MPointer<int>::New();
 
     std::cout<< "" << std::endl;
     std::cout << "Ptr 1: " << &myPtr << std::endl;
@@ -98,14 +102,29 @@ int main() {
     myPtr2 = 11;
     int y= &myPtr2;
     std::cout << "Y: " << y << std::endl;
-    std::cout<< "Nuevo ptr 2: " << &myPtr2<<"\n"<< std::endl;
+    std::cout<< "Nuevo ptr 2: " << &myPtr2 <<"\n"<< std::endl;
 
-    myPtr=myPtr2;
+    *myPtr3 = 7;
+    std::cout<< "Nuevo ptr 3: " << &myPtr3 <<"\n"<< std::endl;
+
+    /*myPtr=myPtr2;
     std::cout << "Si se iguala ptr1 = ptr2: " << std::endl;
     std::cout << "Ptr1: " << &myPtr<< std::endl;
-    std::cout << "Ptr2: " << &myPtr2 << std::endl;
+    std::cout << "Ptr2: " << &myPtr2 << std::endl;*/
 
-    std::cout << "\nLista de Direcciones: " << std::endl;
-    mPointerGC.getLista().mostrar();
+    LE le = mPointerGC.getLista();
+    LDE lde = mPointerGC.getListaD();
+
+    std::cout << "Lista de Direcciones: " << std::endl;
+    std::cout << "LE: ";
+    le.mostrar<int>();
+    std::cout << "LDE: ";
+    lde.mostrar<int>();
+
+    //BubbleSort::bubbleSort<int>(lde);
+    //InsertionSort::insertionSort<int>(lde);
+    QuickSort::quickSort<int>(lde);
+    std::cout << "LDE Ordenada: ";
+    lde.mostrar<int>();
     return 0;
 }

@@ -91,13 +91,3 @@ LDE::nodoDoble* LDE::buscar(int* dato) {
     std::cout << "No encontrado!" << std::endl;
     return NULL;
 }
-
-void LDE::mostrar() {
-    nodoDoble* temp = cabeza;
-    std::cout << "[";
-    while(temp->siguiente != NULL){
-        std::cout << *temp->dato << ",";
-        temp = temp->siguiente;
-    }
-    std::cout << *temp->dato << "]" << std::endl;
-}
