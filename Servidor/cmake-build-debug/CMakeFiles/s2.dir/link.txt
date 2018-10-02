@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/s2.dir/main.cpp.o CMakeFiles/s2.dir/ListaEnlazadaServidor.cpp.o  -o s2 
