@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+typedef ListaEnlazada ::nodoSimple nodoSimple;
+
 void ListaEnlazada::agregar(int* n) {
     nodoSimple *nuevo_nodo = new nodoSimple();
     nuevo_nodo->dato = n;
@@ -24,27 +26,30 @@ void ListaEnlazada::agregar(int* n) {
     }
 }
 
-void ListaEnlazada::buscar(int* n) {
+nodoSimple* ListaEnlazada::buscar(int* n) {
     bool band = false;
-    nodoSimple *temp = cabeza;
+    nodoSimple* temp = cabeza;
     while (temp != NULL){
         if(temp->dato == n){
             band = true;
+            break;
         }
         temp = temp->siguiente;
     }
     if(band == true){
         std::cout<< n <<" "<<"si se encuentra en la lista \n";
+        return temp;
     }
     else{
         std::cout<< n <<" " << "no se encuentra en la lista \n";
+        return NULL;
     }
 }
 
 void ListaEnlazada::eliminar(int* dato) {
     if (cabeza != NULL){
-        nodoSimple *temp_borrar;
-        nodoSimple *temp_anterior=NULL;
+        nodoSimple* temp_borrar;
+        nodoSimple* temp_anterior=NULL;
         temp_borrar = cabeza;
 
         while ((temp_borrar != NULL)&&(temp_borrar->dato != dato)){

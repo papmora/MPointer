@@ -20,7 +20,7 @@ private:
 
 public:
     ///Constructor por defecto
-    MPointer() : PDato(new T), reference(NULL) {
+    MPointer() : ID(0), PDato(new T), reference(NULL) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -28,7 +28,7 @@ public:
     }
 
     ///Constructor con datos
-    MPointer(T* pValue) : PDato(pValue), reference(0) {
+    MPointer(T* pValue) : ID(this->getID()), PDato(pValue), reference(0) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -36,7 +36,7 @@ public:
     }
 
     ///Constructor copia
-    MPointer(const MPointer<T>& sp) : PDato(sp.PDato), reference(sp.reference)
+    MPointer(const MPointer<T>& sp) : ID(sp.getID()), PDato(sp.PDato), reference(sp.reference)
     {
         /// Copia el constructor
         /// Copia el PDato y el conteo de referencias
@@ -75,7 +75,6 @@ public:
            }
            // copia el dato y la referencia al puntero
            // e incrementa el contador de referencias
-           this->ID=MP.ID ;
            this->PDato=MP.PDato;
            reference->AddRef();
        }
@@ -89,6 +88,7 @@ public:
 
     ///sobre carga del operador = (igualdad entre *Mpointer y tipo T) guarda dato en espacio
     void operator =(T* t){
+        std::cout << "HEY!" << std::endl;
         this->setPDato(t);
     }
 
@@ -96,8 +96,9 @@ public:
     static MPointer<T> New(){
         MPointer<T>* ptr = new MPointer<T>();
 
-        ptr->setID(MPointerGC::getId());
         MPointerGC::agregarDirecciones((int*) ptr);
+        int id = MPointerGC::getId();
+        ptr->setID(id);
         return *ptr;
     }
 
@@ -108,6 +109,7 @@ public:
 
     ///Metodo set de PDato
     void setPDato(T *PDato) {
+        std::cout << "HEY!" << std::endl;
         MPointer::PDato = PDato;
     }
 

@@ -16,7 +16,7 @@ public:
     typedef struct Nodo {
         int* dato;
         struct Nodo *siguiente;
-    } nodoSimple;
+    }nodoSimple;
 
     nodoSimple* cabeza = NULL;
 
@@ -35,7 +35,7 @@ public:
     }
 
     //Buscar en la lista
-    void buscar(int* n);
+    nodoSimple* buscar(int* n);
     //Eliminar elemento de la lista
     void eliminar(int* dato);
 };

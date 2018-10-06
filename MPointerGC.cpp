@@ -27,7 +27,6 @@ void MPointerGC::agregarDirecciones(int* dir) {
 }
 
 MPointerGC& MPointerGC::getInstance() {
-    MP.id += 1;
     return MP;
 }
 
@@ -40,5 +39,6 @@ LDE MPointerGC::getListaD() {
 }
 
 int MPointerGC::getId() {
+    id = id + 1;
     return id;
 }

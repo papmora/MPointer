@@ -15,86 +15,19 @@ typedef ListaEnlazada LE;
 
 int main() {
 
-    /*std::cout << "LISTA ENLAZADA SIMPLE: " << std::endl;
-    ListaEnlazada LE = ListaEnlazada();
-    ListaEnlazada::nodoSimple *cabeza = NULL;
-    int v1 = 3;
-    LE.agregar(&v1);
-    int v2 = 5;
-    LE.agregar(&v2);
-    int v3 = 8;
-    LE.agregar(&v3);
-    int v4 = 2;
-    LE.agregar(&v4);
-    int v5 = 11;
-    LE.agregar(&v5);
-
-    std::cout << "Primer iteracion: " << std::endl;
-    LE.mostrar();
-
-    LE.buscar((int*) 2);
-    LE.buscar((int*) 20);
-
-    LE.eliminar((int*) 8);
-    std::cout << "Segunda iteracion: " << std::endl;
-    LE.mostrar();
-
-    LE.eliminar((int*) 30);
-    std::cout << "Tercera iteracion: " << std::endl;
-    LE.mostrar();
-
-    std::cout << "\nLISTA DOBLEMENTE ENLAZADA: " << std::endl;
-    ListaDoblementeEnlazada LDE = ListaDoblementeEnlazada();
-    int v6 = 7;
-    LDE.agregarInicio(&v6);
-    int v7 = 9;
-    LDE.agregarFinal(&v7);
-    int v8 = 24;
-    LDE.agregarInicio(&v8);
-    int v9 = 12;
-    LDE.agregarFinal(&v9);
-
-    std::cout << "Primer iteracion: " << std::endl;
-    LDE.mostrar();
-
-    int v10 = 15;
-    LDE.agregarEspec(3,&v10);
-    int v11 = 22;
-    LDE.agregarEspec(2, &v11);
-    std::cout << "Segunda iteracion: " << std::endl;
-    LDE.mostrar();
-
-    ListaDoblementeEnlazada::nodoDoble* aBorrar = LDE.buscar(&v10);
-    LDE.eliminar(aBorrar);
-
-    std::cout << "Tercera iteracion: " << std::endl;
-    LDE.mostrar();*/
-
-    /*BubbleSort BS = BubbleSort();
-    BS.bubbleSort(LDE);
-    std::cout << "Ordenamiento Burbuja: " << std::endl;
-    LDE.mostrar();*/
-
-    /*InsertionSort IS = InsertionSort();
-    IS.insertionSort(LDE);
-    std::cout << "Ordenamiento por Inserción: " << std::endl;
-    LDE.mostrar();*/
-
-    /*QuickSort QS = QuickSort();
-    QS.quickSort(LDE);
-    std::cout << "Ordenamiento QuickSort: " << std::endl;
-    LDE.mostrar();*/
-
-// pruebas MPointer
+    ///Pruebas MPointer
     MPointerGC& mPointerGC = MPointerGC::getInstance();
 
     MPointer<int> myPtr = MPointer<int>::New();
     MPointer<int> myPtr2 = MPointer<int>::New();
     MPointer<int> myPtr3 = MPointer<int>::New();
+    MPointer<int> myPtr4 = MPointer<int>::New();
 
     std::cout<< "" << std::endl;
     std::cout << "Ptr 1: " << &myPtr << std::endl;
-    std::cout << "Ptr 2: " << &myPtr2 <<"\n"<< std::endl;
+    std::cout << "Ptr 2: " << &myPtr2 << std::endl;
+    std::cout << "Ptr 3: " << &myPtr3 << std::endl;
+    std::cout << "Ptr 4: " << &myPtr4 <<"\n"<< std::endl;
 
     *myPtr = 5;
     std::cout<< "Nuevo ptr 1: " << &myPtr <<"\n"<< std::endl;
@@ -107,15 +40,20 @@ int main() {
     *myPtr3 = 7;
     std::cout<< "Nuevo ptr 3: " << &myPtr3 <<"\n"<< std::endl;
 
+    *myPtr4 = 3;
+    std::cout<< "Nuevo ptr 4: " << &myPtr4 <<"\n"<< std::endl;
+
     /*myPtr=myPtr2;
     std::cout << "Si se iguala ptr1 = ptr2: " << std::endl;
     std::cout << "Ptr1: " << &myPtr<< std::endl;
     std::cout << "Ptr2: " << &myPtr2 << std::endl;*/
 
+
+
     LE le = mPointerGC.getLista();
     LDE lde = mPointerGC.getListaD();
 
-    std::cout << "Lista de Direcciones: " << std::endl;
+    std::cout << "\nLISTA DE DIRECCIONES: " << std::endl;
     std::cout << "LE: ";
     le.mostrar<int>();
     std::cout << "LDE: ";
@@ -126,5 +64,11 @@ int main() {
     QuickSort::quickSort<int>(lde);
     std::cout << "LDE Ordenada: ";
     lde.mostrar<int>();
+
+    std::cout << "\nID's: " << std::endl;
+    std::cout << "ID myPtr: " << myPtr.getID() << std::endl;
+    std::cout << "ID myPtr2: " << myPtr2.getID() << std::endl;
+    std::cout << "ID myPtr3: " << myPtr3.getID() << std::endl;
+    std::cout << "ID myPtr4: " << myPtr4.getID() << std::endl;
     return 0;
 }
