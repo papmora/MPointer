@@ -16,15 +16,14 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 
-#define PORT_NUMBER     5000
-#define SERVER_ADDRESS  "localhost"
-#define FILE_TO_SEND    "/home/samuel/CLionProjects/c2/data.json"
+#define FILE_TO_SEND    "/home/samuel/data.json"
 
 using namespace std;
 using json = nlohmann::json;
 
 
-int token=0;
+string SERVER_ADDRESS;
+int puerto;
 
 int cliente::conectar() {
     struct sockaddr_in remote_addr;
@@ -51,8 +50,8 @@ int cliente::conectar() {
 
     // Construye remote_addr
     remote_addr.sin_family = AF_INET;
-    inet_pton(AF_INET, SERVER_ADDRESS, &(remote_addr.sin_addr));
-    remote_addr.sin_port = htons(PORT_NUMBER);
+    inet_pton(AF_INET, "127.0.0.1", &(remote_addr.sin_addr));
+    remote_addr.sin_port = htons(puerto);
 
     // Crea client socket
     client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -135,8 +134,7 @@ int cliente::conectar() {
 
             ifstream x(FILE_TO_SEND);
             x >> j1;
-            token = j1["id"];
-            return token;
+            return j1["id"];
         }
     }
 
@@ -145,6 +143,10 @@ int cliente::conectar() {
     return 0;
 }
 
-int cliente::getToken(){
-    return token;
+void cliente::setServer(string g){
+    SERVER_ADDRESS = g;
+}
+
+void cliente::setPuerto(int s){
+    puerto = s;
 }

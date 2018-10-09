@@ -8,15 +8,27 @@
 #include <iostream>
 #include <typeinfo>
 
+
 #include "MPointerGC.h"
 #include "RC.h"
 
-template <class T>
+#include "nlohmann/json.hpp"
+#include "cliente.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+#define FILE_TO_SEND    "/home/samuel/data.json"
+
+using namespace std;
+using json = nlohmann::json;
+
+template<class T>
 class MPointer {
 private:
     int ID;
-    T* PDato= new T; ///puntero del dato que se va a usar
-    RC* reference; /// puntero de contador de referencias
+    T *PDato = new T; ///puntero del dato que se va a usar
+    RC *reference; /// puntero de contador de referencias
 
 public:
     ///Constructor por defecto
@@ -28,7 +40,7 @@ public:
     }
 
     ///Constructor con datos
-    MPointer(T* pValue) : ID(this->getID()), PDato(pValue), reference(0) {
+    MPointer(T *pValue) : ID(this->getID()), PDato(pValue), reference(0) {
         /// Crea nueva referencia
         reference = new RC();
         /// Incrementa el conteo de referencias
@@ -36,67 +48,144 @@ public:
     }
 
     ///Constructor copia
-    MPointer(const MPointer<T>& sp) : ID(sp.getID()), PDato(sp.PDato), reference(sp.reference)
-    {
+    MPointer(const MPointer<T> &sp) : ID(sp.getID()), PDato(sp.PDato), reference(sp.reference) {
         /// Copia el constructor
         /// Copia el PDato y el conteo de referencias
         /// incrementa el conteo de referencias
         reference->AddRef();
     }
 
-    ~MPointer()
-    {
+    ~MPointer() {
         /// Destructor
         /// Disminuye el conteo de referencias
         /// si conteo de refencias es igual a cero, elimina la data
-        if(reference->Release() == 0)
-        {
+        if ( reference->Release() == 0 ) {
             delete PDato;
             delete reference;
         }
     }
+
     ///sobre carga del operador &
-    T operator & (){
+    T operator&() {
         return *getPDato();
     }
+
     ///sobre carga del operador *
-    T& operator * (){
-        return *PDato ;
+    T &operator*() {
+        return *PDato;
     }
+
     ///sobre carga del operador = (igualdad de MPointer)
-    MPointer<T>& operator = ( MPointer<T> &MP){
+    MPointer<T> &operator=(MPointer<T> &MP) {
         // Operador de asignacion
-       if (*this->PDato != &MP) { // Evita que se asigne el mismo dato
-           // Decrementa el contador de referencias
-           // si la referencia se vuelve cero borra el dato
-           if (reference->Release() == 0) {
-               delete PDato;
-               delete reference;
-           }
-           // copia el dato y la referencia al puntero
-           // e incrementa el contador de referencias
-           this->PDato=MP.PDato;
-           reference->AddRef();
-       }
-       return *this;
+        if ( *this->PDato != &MP ) { // Evita que se asigne el mismo dato
+            // Decrementa el contador de referencias
+            // si la referencia se vuelve cero borra el dato
+            if ( reference->Release() == 0 ) {
+                delete PDato;
+                delete reference;
+            }
+
+            cliente socket;
+            json j1 = {{"byte",  0},
+                       {"id",    0},
+                       {"value", 0}};
+
+            remove(FILE_TO_SEND);
+            ofstream o(FILE_TO_SEND);
+            o << setw(24) << j1 << std::endl;
+
+            int g = this->getID();
+            cout << g << endl;
+            T h = *MP.PDato;
+            j1["byte"] = 0;
+            j1["value"] = h;
+            j1["id"] = g;
+            remove(FILE_TO_SEND);
+            ofstream z(FILE_TO_SEND);
+            cout << "hola"<< endl;
+            z << setw(24) << j1 << std::endl;
+            socket.conectar();
+
+            // copia el dato y la referencia al puntero
+            // e incrementa el contador de referencias
+            this->PDato = MP.PDato;
+            reference->AddRef();
+        }
+        return *this;
     }
 
     ///sobre carga del operador = (igualdad entre Mpointer y tipo T) guarda dato en espacio
-    void operator =(const T t){
-        *PDato=t;
+    void operator=(const T t) {
+
+        cliente socket;
+        json j1 = {{"byte",  0},
+                   {"id",    0},
+                   {"value", 0}};
+
+        remove(FILE_TO_SEND);
+        ofstream o(FILE_TO_SEND);
+        o << setw(10) << j1 << std::endl;
+
+        int g = this->getID();
+        j1["byte"] = 0;
+        j1["value"] = t;
+        j1["id"] = g;
+        remove(FILE_TO_SEND);
+        ofstream z(FILE_TO_SEND);
+        z << setw(24) << j1 << std::endl;
+        socket.conectar();
+
+        *PDato = t;
     }
 
     ///sobre carga del operador = (igualdad entre *Mpointer y tipo T) guarda dato en espacio
-    void operator =(T* t){
+    void operator=(T *t) {
         std::cout << "HEY!" << std::endl;
+
+        cliente socket;
+        json j1 = {{"byte",  0},
+                   {"id",    0},
+                   {"value", 0}};
+
+        remove(FILE_TO_SEND);
+        ofstream o(FILE_TO_SEND);
+        o << setw(10) << j1 << std::endl;
+
+        int g = this->getID();
+        j1["byte"] = 0;
+        j1["value"] = *t;
+        j1["id"] = g;
+        remove(FILE_TO_SEND);
+        ofstream z(FILE_TO_SEND);
+        z << setw(24) << j1 << std::endl;
+        socket.conectar();
+
         this->setPDato(t);
     }
 
     ///Metodo New para crear MPointer
-    static MPointer<T> New(){
-        MPointer<T>* ptr = new MPointer<T>();
+    static MPointer<T> New() {
+        MPointer<T> *ptr = new MPointer<T>();
 
-        MPointerGC::agregarDirecciones((int*) ptr);
+        cliente socket;
+        json j1 = {{"byte",  0},
+                   {"id",    0},
+                   {"value", 0}};
+
+        remove(FILE_TO_SEND);
+        ofstream o(FILE_TO_SEND);
+        o << setw(24) << j1 << std::endl;
+
+        j1["byte"] = sizeof(T);
+        j1["value"] = 0;
+        j1["id"] = 0;
+        remove(FILE_TO_SEND);
+        ofstream x(FILE_TO_SEND);
+        x << setw(24) << j1 << std::endl;
+        int id6 = socket.conectar();
+
+        MPointerGC::agregarDirecciones((int *) ptr);
         int id = MPointerGC::getId();
         ptr->setID(id);
         return *ptr;

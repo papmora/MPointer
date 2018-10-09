@@ -7,7 +7,8 @@
 class cliente {
 public:
     int conectar();
-    int getToken();
+    void setServer(std::string g);
+    void setPuerto(int s);
 };
 
 
