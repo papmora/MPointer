@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/samuel/CLionProjects/Servidor/ListaEnlazadaServidor.cpp
-iostream
--
-string
--
-stdlib.h
--
-ListaEnlazadaServidor.h
-/home/samuel/CLionProjects/Servidor/ListaEnlazadaServidor.h
-
 /home/samuel/CLionProjects/Servidor/ListaEnlazadaServidor.h
 iostream
 -
@@ -57,6 +47,8 @@ iomanip
 -
 ListaEnlazadaServidor.h
 /home/samuel/CLionProjects/Servidor/ListaEnlazadaServidor.h
+netdb.h
+-
 
 /home/samuel/CLionProjects/Servidor/nlohmann/adl_serializer.hpp
 utility

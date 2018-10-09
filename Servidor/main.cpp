@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iomanip>
 #include "ListaEnlazadaServidor.h"
+#include <netdb.h>
 
 #define PORT_NUMBER     5000
 #define SERVER_ADDRESS  "localhost"
@@ -50,8 +51,7 @@ int main() {
                {"value", 0}};
     size_t bytes = 12;
     static LE lista;
-    int contador = 0;
-    int ID = 0;
+    int ID = 1;
 
     cout << "Cantidad de bytes a almacenar" << endl;
     cin >> bytes;
@@ -60,11 +60,8 @@ int main() {
         cout << "Memory Allocation Failed" << endl;
         exit(1);
     }
-    if ( contador == 0 ) {
-        contador = 1;
-        for (int i = 0; i < (bytes / sizeof(int)); i++) {
-            ptr[i] = 0;
-        }
+    for (int i = 0; i < (bytes / sizeof(int)); i++) {
+        ptr[i] = 0;
     }
 
     cout << "El servidor a sido iniciado" << endl;
@@ -122,12 +119,9 @@ int main() {
             remain_data = file_size;
 
             len = recv(peer_socket, buffer, BUFSIZ, 0);
-            len = remain_data;
-            while ((len > 0) && (remain_data > 0)) {
-                fwrite(buffer, sizeof(char), len, received_file);
-                remain_data -= len;
-                fprintf(stdout, "Recive %d bytes y se esperan :- %d bytes\n", len, remain_data);
-            }
+            fwrite(buffer, sizeof(char), len, received_file);
+            remain_data -= abs(len);
+            fprintf(stdout, "Recive %d bytes y se esperan :- %d bytes\n", remain_data, len);
             fclose(received_file);
 
             ifstream i(FILENAME);
