@@ -9,6 +9,9 @@
 #include "Algoritmos de Ordenamiento/QuickSort.h"
 #include "MPointer.h"
 #include "MPointerGC.h"
+#include <thread>
+
+static const int num_threads = 10;
 
 typedef ListaDoblementeEnlazada LDE;
 typedef ListaEnlazada LE;
