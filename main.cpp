@@ -13,7 +13,23 @@
 typedef ListaDoblementeEnlazada LDE;
 typedef ListaEnlazada LE;
 
+void call_from_thread(int tid) {
+    std::cout << "Ejecutando thread del singleton " << tid << std::endl;
+}
+
 int main() {
+    //thread
+    std::thread t[num_threads];
+
+    for (int i = 0; i < num_threads; i++) {
+        t[i] = std::thread(call_from_thread, i);
+    }
+
+    std::cout << "Launched from the main\n"<< std::endl;
+
+    for (int i = 0; i < num_threads; i++) {
+        t[i].join();
+    }
 
     ///Pruebas MPointer
     MPointerGC& mPointerGC = MPointerGC::getInstance();
